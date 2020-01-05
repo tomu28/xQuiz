@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from './components/Home'
+import Chat from './components/Chat'
 import {NotFound} from './components/NotFound'
 
 const App = () => {
 
   return (
-    <Switch>
-      <Route exact path="/" component={Home} />
-      <Route path='*' children={<NotFound />} />
-    </Switch>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/chat" component={Chat} />
+        <Route path='*' children={<NotFound />} />
+      </Switch>
+    </BrowserRouter>
   );
 };
 

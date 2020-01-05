@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Progress from './Progress';
 import Question from './Question';
 import Answers from './Answers';
+import { withRouter } from 'react-router';
 // Material-UI
 import { makeStyles } from '@material-ui/styles'
 import BottomNavigation from '@material-ui/core/BottomNavigation';
@@ -19,7 +20,7 @@ const useStyles = makeStyles({
   },
 });
 
-function Home() {
+function Home(props) {
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [currentAnswer, setCurrentAnswer] = useState('');
@@ -29,6 +30,11 @@ function Home() {
   
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+    
+  const changeRoutePath = (e, link) => {
+      e.preventDefault();
+      props.history.push(link);
+  };
 
   const questions = [
 
@@ -143,9 +149,15 @@ if(showResults){
           }}
           showLabels
           className={classes.root}
-          >
-          <BottomNavigationAction label="Quiz" icon={<ContactSupportOutlinedIcon />} />
-          <BottomNavigationAction label="Chat" icon={<ChatIcon />} />
+        >
+              <BottomNavigationAction
+                  label="Quiz"
+                  icon={<ContactSupportOutlinedIcon />}
+                  onClick={(e) => changeRoutePath(e, '/')}/>
+              <BottomNavigationAction
+                  label="Chat"
+                  icon={<ChatIcon />}
+                  onClick={(e) => changeRoutePath(e, '/chat')}/>
         </BottomNavigation>
     </div>
   );
@@ -176,13 +188,18 @@ if(showResults){
         showLabels
         className={classes.root}
         >
-        <BottomNavigationAction label="Quiz" icon={<ContactSupportOutlinedIcon />} />
-        <BottomNavigationAction label="Chat" icon={<ChatIcon />} />
+        <BottomNavigationAction
+            label="Quiz"
+            icon={<ContactSupportOutlinedIcon />}
+            onClick={(e) => changeRoutePath(e, '/')}/>
+        <BottomNavigationAction
+            label="Chat"
+            icon={<ChatIcon />}
+            onClick={(e) => changeRoutePath(e, '/chat')}/>
       </BottomNavigation>
-      
     </div>
   ); 
   }
 }
 
-export default Home;
+export default withRouter(Home);
