@@ -4,7 +4,7 @@ import Question from './Question';
 import Answers from './Answers';
 import { withRouter } from 'react-router';
 // Material-UI
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import ContactSupportOutlinedIcon from '@material-ui/icons/ContactSupportOutlined';
@@ -127,6 +127,7 @@ const next = () => {
 
   if(currentQuestion + 1 < questions.length) {
       setCurrentQuestion(currentQuestion + 1);
+      setError('');
       return;
   }
 
