@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import {MuiThemeProvider, makeStyles} from '@material-ui/core/styles';
 import Home from './components/Home'
+import {NotFound} from './components/NotFound'
 
 const useStyles = makeStyles({
   root: {
@@ -20,7 +21,8 @@ const App = () => {
 
   return (
     <Switch>
-      <Route exact path="/" component={Home}></Route>
+      <Route exact path="/" component={Home} />
+      <Route path='*' children={<NotFound />} />
     </Switch>
   );
 };
