@@ -23,7 +23,8 @@ function Chat(props) {
         props.history.push(link);
     };
 
-    return (        
+    // TODO: footerのSelected Colorが合わない場合があるため、valueのStateをHomeコンポーネントと結びつけること
+    return (
         <div>
             <h2>Chat</h2>
             <BottomNavigation
@@ -33,16 +34,16 @@ function Chat(props) {
             }}
             showLabels
             className={classes.root}
-        >
-        <BottomNavigationAction
-            label="Quiz"
-            icon={<ContactSupportOutlinedIcon />}
-            onClick={(e) => changeRoutePath(e, '/')}/>
-        <BottomNavigationAction
-            label="Chat"
-            icon={<ChatIcon />}
-            onClick={(e) => changeRoutePath(e, '/chat')}/>
-        </BottomNavigation>
+            >
+            <BottomNavigationAction
+                label="Quiz"
+                icon={<ContactSupportOutlinedIcon />}
+                onClick={(e) => changeRoutePath(e, '/')}/>
+            <BottomNavigationAction
+                label="Chat"
+                icon={<ChatIcon />}
+                onClick={(e) => changeRoutePath(e, '/chat')}/>
+            </BottomNavigation>
         </div>
     );
 }
