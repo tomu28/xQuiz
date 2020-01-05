@@ -2,8 +2,23 @@ import React, { useState } from 'react';
 import Progress from './components/Progress';
 import Question from './components/Question';
 import Answers from './components/Answers';
+import { makeStyles } from '@material-ui/styles'
+// Material-UI
+import BottomNavigation from '@material-ui/core/BottomNavigation';
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import RestoreIcon from '@material-ui/icons/Restore';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
 
 import './App.css';
+
+const useStyles = makeStyles({
+  root: {
+    position: "fixed",
+    bottom: 0,
+    width: "100%",
+  },
+});
 
 function App() {
 
@@ -13,6 +28,8 @@ function App() {
   const [error, setError] = useState('');
   const [showResults, setShowResults] = useState();
   
+  const classes = useStyles();
+  const [value, setValue] = React.useState(0);
 
   const questions = [
 
@@ -119,6 +136,18 @@ if(showResults){
         <button className = "btn btn-primary" onClick = {restart}>
         もう一度挑戦
         </button>
+      
+        <BottomNavigation
+          value={value}
+          onChange={(event, newValue) => {
+            setValue(newValue);
+          }}
+          showLabels
+          className={classes.root}
+          >
+          <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
+          <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
+        </BottomNavigation>
     </div>
   );
 }else{
@@ -139,6 +168,19 @@ if(showResults){
       <button className = "btn btn-primary" onClick = {next}>
         次へ
       </button>
+
+      <BottomNavigation
+        value={value}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+        }}
+        showLabels
+        className={classes.root}
+        >
+        <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
+        <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
+      </BottomNavigation>
+      
     </div>
   ); 
   }
