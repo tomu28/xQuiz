@@ -2,7 +2,6 @@ import React from 'react';
 import Answer from './Answer';
 
 function Answers(props){
-    
 
     return(
         <>
