@@ -6,9 +6,8 @@ import { makeStyles } from '@material-ui/styles'
 // Material-UI
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import RestoreIcon from '@material-ui/icons/Restore';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
+import ContactSupportOutlinedIcon from '@material-ui/icons/ContactSupportOutlined';
+import ChatIcon from '@material-ui/icons/Chat';
 
 import './App.css';
 
@@ -145,8 +144,8 @@ if(showResults){
           showLabels
           className={classes.root}
           >
-          <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
-          <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
+          <BottomNavigationAction label="Quiz" icon={<ContactSupportOutlinedIcon />} />
+          <BottomNavigationAction label="Chat" icon={<ChatIcon />} />
         </BottomNavigation>
     </div>
   );
@@ -177,8 +176,8 @@ if(showResults){
         showLabels
         className={classes.root}
         >
-        <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
-        <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
+        <BottomNavigationAction label="Quiz" icon={<ContactSupportOutlinedIcon />} />
+        <BottomNavigationAction label="Chat" icon={<ChatIcon />} />
       </BottomNavigation>
       
     </div>
