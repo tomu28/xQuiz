@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import Progress from './components/Progress';
 import Question from './components/Question';
 import Answers from './components/Answers';
-import { makeStyles } from '@material-ui/styles'
 // Material-UI
+import { makeStyles } from '@material-ui/styles'
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import ContactSupportOutlinedIcon from '@material-ui/icons/ContactSupportOutlined';
