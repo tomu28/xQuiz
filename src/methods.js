@@ -8,6 +8,35 @@ function handleInput(event) {
     [name]: value,
     });
 }
+// 052b228e-a4aa-474d-884b-ab4270f81843
+function connectToRoom(id = '052b228e-a4aa-474d-884b-ab4270f81843') {
+    const { currentUser } = this.state;
+
+    this.setState({
+        messages: [],
+    });
+
+    return currentUser
+        .subscribeToRoom({
+        roomId: `${id}`,
+        })
+        .then(currentRoom => {
+        const roomName =
+            currentRoom.customData && currentRoom.customData.isDirectMessage
+            ? currentRoom.customData.userIds.filter(
+                id => id !== currentUser.id
+                )[0]
+            : currentRoom.name;
+
+        this.setState({
+            currentRoom,
+            roomUsers: currentRoom.users,
+            rooms: currentUser.rooms,
+            roomName,
+        });
+        })
+        .catch(console.error);
+    }
 
 function connectToChatkit(event) {
     event.preventDefault();
@@ -47,11 +76,12 @@ function connectToChatkit(event) {
                 currentUser,
                 showLogin: false,
                 rooms: currentUser.rooms,
-            }
+            },
+                () => connectToRoom.call(this)
             );
         });
     })
     .catch(console.error);
 }
 
-export { handleInput, connectToChatkit }
+export { handleInput, connectToRoom, connectToChatkit }

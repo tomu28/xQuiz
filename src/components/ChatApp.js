@@ -4,8 +4,10 @@ import React, { Component } from 'react';
 import {
     handleInput,
     connectToChatkit,
+    connectToRoom,
 } from '../methods';
 import Dialog from './Dialog';
+import RoomList from './RoomList';
 import '../Chat.css';
 
 class ChatApp extends Component {
@@ -49,9 +51,19 @@ class ChatApp extends Component {
                         <span className="user-id">{`@${currentUser.id}`}</span>
                     </div>
                 ) : null}
+                {currentRoom ? (
+                <RoomList
+                    rooms={rooms}
+                    currentRoom={currentRoom}
+                    connectToRoom={this.connectToRoom}
+                    currentUser={currentUser}
+                />
+                ) : null}
             </aside>
         <section className="chat-screen">
-            <header className="chat-header"></header>
+            <header className="chat-header">
+                {currentRoom ? <h3>{roomName}</h3> : null}
+            </header>
             <ul className="chat-messages"></ul>
             <footer className="chat-footer">
             <form className="message-form">
