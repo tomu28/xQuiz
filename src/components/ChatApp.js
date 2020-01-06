@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
-// import 'skeleton-css/css/normalize.css';
-// import 'skeleton-css/css/skeleton.css';
 import {
     handleInput,
     connectToChatkit,
+    connectToRoom,
+    sendMessage,
+    sendDM,
 } from '../methods';
 import Dialog from './Dialog';
+import RoomList from './RoomList';
+import ChatSession from './ChatSession';
+import RoomUsers from './RoomUsers';
 import '../Chat.css';
 
 class ChatApp extends Component {
@@ -25,6 +29,9 @@ class ChatApp extends Component {
     };
     this.handleInput = handleInput.bind(this);
     this.connectToChatkit = connectToChatkit.bind(this);
+    this.connectToRoom = connectToRoom.bind(this);
+    this.sendMessage = sendMessage.bind(this);
+    this.sendDM = sendDM.bind(this);
     }
 
     render() {
@@ -49,30 +56,51 @@ class ChatApp extends Component {
                         <span className="user-id">{`@${currentUser.id}`}</span>
                     </div>
                 ) : null}
-            </aside>
-        <section className="chat-screen">
-            <header className="chat-header"></header>
-            <ul className="chat-messages"></ul>
-            <footer className="chat-footer">
-            <form className="message-form">
-                <input
-                type="text"
-                name="newMessage"
-                className="message-input"
-                placeholder="Type your message and hit ENTER to send"
+                {currentRoom ? (
+                <RoomList
+                    rooms={rooms}
+                    currentRoom={currentRoom}
+                    connectToRoom={this.connectToRoom}
+                    currentUser={currentUser}
                 />
-            </form>
-            </footer>
-        </section>
+                ) : null}
+            </aside>
+            <section className="chat-screen">
+                <header className="chat-header">
+                    {currentRoom ? <h3>{roomName}</h3> : null}
+                </header>
+                <ul className="chat-messages">
+                    <ChatSession messages={messages} />
+                </ul>
+                <footer className="chat-footer">
+                    <form onSubmit={this.sendMessage} className="message-form">
+                        <input
+                        type="text"
+                        value={newMessage}
+                        name="newMessage"
+                        className="message-input"
+                        placeholder="Type your message and hit ENTER to send"
+                        onChange={this.handleInput}
+                        />
+                    </form>
+                </footer>
+            </section>
         <aside className="sidebar right-sidebar">
-              {showLogin ? (
-                <Dialog
-                  userId={userId}
-                  handleInput={this.handleInput}
-                  connectToChatkit={this.connectToChatkit}
+            {currentRoom ? (
+                <RoomUsers
+                    currentUser={currentUser}
+                    sendDM={this.sendDM}
+                    roomUsers={roomUsers}
                 />
-              ) : null}
-            </aside>
+            ) : null}
+        </aside>
+                {showLogin ? (
+                <Dialog
+                    userId={userId}
+                    handleInput={this.handleInput}
+                    connectToChatkit={this.connectToChatkit}
+                />
+            ) : null}
         </div>
     );
     }

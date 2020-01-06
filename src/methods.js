@@ -9,6 +9,55 @@ function handleInput(event) {
     });
 }
 
+// Quality: d3a62346-4501-4b50-aefd-bd6add171e96
+// General: 052b228e-a4aa-474d-884b-ab4270f81843
+function connectToRoom(id = '052b228e-a4aa-474d-884b-ab4270f81843') {
+    const { currentUser } = this.state;
+
+    this.setState({
+      messages: [],
+    });
+
+    return currentUser
+        .subscribeToRoom({
+        roomId: `${id}`,
+        messageLimit: 100,
+        hooks: {
+            onMessage: message => {
+            this.setState({
+                messages: [...this.state.messages, message],
+            });
+            },
+            onPresenceChanged: () => {
+            const { currentRoom } = this.state;
+            this.setState({
+                roomUsers: currentRoom.users.sort(a => {
+                if (a.presence.state === 'online') return -1;
+
+                return 1;
+                }),
+            });
+            },
+        },
+        })
+        .then(currentRoom => {
+        const roomName =
+            currentRoom.customData && currentRoom.customData.isDirectMessage
+            ? currentRoom.customData.userIds.filter(
+                id => id !== currentUser.id
+                )[0]
+            : currentRoom.name;
+
+        this.setState({
+            currentRoom,
+            roomUsers: currentRoom.users,
+            rooms: currentUser.rooms,
+            roomName,
+        });
+    })
+    .catch(console.error);
+}
+
 function connectToChatkit(event) {
     event.preventDefault();
 
@@ -47,11 +96,69 @@ function connectToChatkit(event) {
                 currentUser,
                 showLogin: false,
                 rooms: currentUser.rooms,
-            }
+            },
+                () => connectToRoom.call(this)
             );
         });
     })
     .catch(console.error);
 }
 
-export { handleInput, connectToChatkit }
+function sendMessage(event) {
+event.preventDefault();
+const { newMessage, currentUser, currentRoom } = this.state;
+
+if (newMessage.trim() === '') return;
+
+currentUser.sendMessage({
+    text: newMessage,
+    roomId: `${currentRoom.id}`,
+});
+
+this.setState({
+        newMessage: '',
+    });
+}
+
+function createPrivateRoom(id) {
+    const { currentUser, rooms } = this.state;
+    const roomName = `${currentUser.id}_${id}`;
+
+    const isPrivateChatCreated = rooms.filter(room => {
+    if (room.customData && room.customData.isDirectMessage) {
+        const arr = [currentUser.id, id];
+        const { userIds } = room.customData;
+
+        if (arr.sort().join('') === userIds.sort().join('')) {
+            return {
+                room,
+            };
+        }
+    }
+
+        return false;
+    });
+
+    if (isPrivateChatCreated.length > 0) {
+        return Promise.resolve(isPrivateChatCreated[0]);
+    }
+
+    return currentUser.createRoom({
+        name: `${roomName}`,
+        private: true,
+        addUserIds: [`${id}`],
+        customData: {
+        isDirectMessage: true,
+        userIds: [currentUser.id, id],
+        },
+    });
+}
+
+function sendDM(id) {
+createPrivateRoom.call(this, id).then(room => {
+    connectToRoom.call(this, room.id);
+});
+}
+
+// update the exports
+export { handleInput, connectToRoom, connectToChatkit, sendMessage, sendDM }
