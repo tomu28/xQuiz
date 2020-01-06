@@ -33,3 +33,11 @@ CHATKIT_SECRET_KEY=<your chatkit secret key>
 ```sh
 $ node server.js
 ```
+
+## 動作確認方法
+- サーバーを起動しながら、ルートディレクトリで、以下のコマンドを実行します。
+
+```sh
+$ yarn install
+$ yarn start
+```
