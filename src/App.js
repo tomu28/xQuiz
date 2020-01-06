@@ -1,147 +1,20 @@
-import React, { useState } from 'react';
-import Progress from './components/Progress';
-import Question from './components/Question';
-import Answers from './components/Answers';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import Home from './components/Home'
+import Chat from './components/Chat'
+import {NotFound} from './components/NotFound'
 
-import './App.css';
+const App = () => {
 
-function App() {
-
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [currentAnswer, setCurrentAnswer] = useState('');
-  const [answers, setAnswers] = useState([]);
-  const [error, setError] = useState('');
-  const [showResults, setShowResults] = useState();
-  
-
-  const questions = [
-
-  {
-    id: 1,
-    question:'Proteinの意味は?',
-    answer_a: 'タンパク質',
-    answer_b: '筋肉',
-    answer_c: '増強剤',
-    answer_d: '合成',
-    correct_answer: 'a',
-  },
-  {
-    id: 2,
-    question:'上半身の筋肉で最も大きい部位は?',
-    answer_a: '肩',
-    answer_b: 'お腹',
-    answer_c: '腕',
-    answer_d: '胸',
-    correct_answer: 'a',
-  },
-  {
-    id: 3,
-    question:'筋肉のゴールデンタイムとはいつ?',
-    answer_a: '筋トレ後',
-    answer_b: '夕飯前',
-    answer_c: '就寝前',
-    answer_d: '起床後',
-    correct_answer: 'a',
-  }
-];
-
-const question = questions[currentQuestion];
-
-const handleClick = e => {
-    setCurrentAnswer(e.target.value);
-}
- 
-const renderError = () => {
-  if(!error){
-    return;
-  }
-
-  return <div className = "error">{error}</div>;
-}
-
-const renderResultMark = (question, answer) => {
-  if(question.correct_answer === answer.answer){
-    return <span className = "correct">正解〇</span>;
-  }
-
-  return <span className = "failed">不正解×</span> ;
-};
-
-const renderResultsData = () => {
-    return answers.map( answer => {
-      const question = questions.find(
-        question => question.id === answer.questionId
-      );
-
-    return (
-    <div key = {question.id}>
-      {question.question} - {renderResultMark(question, answer)}
-    </div>
-    );
-
-    });
-};
-
-const restart = () => {
-
-  setAnswers([]);
-  setCurrentAnswer('');
-  setCurrentQuestion(0);
-  setShowResults(false);
-
-};
-
-const next = () => {
-  const answer = {questionId: question.id, answer: currentAnswer};
-
-  if(!currentAnswer){
-    setError('答えを選択してください');
-    return;
-  }
-
-  answers.push(answer);
-  setAnswers(answers);
-  setCurrentAnswer('');
-
-  if(currentQuestion + 1 < questions.length) {
-      setCurrentQuestion(currentQuestion + 1);
-      return;
-  }
-
-  setShowResults(true);
-};
-
-if(showResults){
   return (
-    <div className = "container results">
-        <h2>Results</h2>
-        <ul>{renderResultsData()}</ul>
-        <button className = "btn btn-primary" onClick = {restart}>
-        もう一度挑戦
-        </button>
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/chat" component={Chat} />
+        <Route path='*' children={<NotFound />} />
+      </Switch>
+    </BrowserRouter>
   );
-}else{
-  return (
-    <div className="container">
-      <Progress total = {questions.length} current = {currentQuestion + 1} />
-      
-      <Question question = {question.question} />
-      
-      {renderError()}
-
-      <Answers 
-        question = {question} 
-        currentAnswer = {currentAnswer} 
-        handleClick = {handleClick}
-      />
-
-      <button className = "btn btn-primary" onClick = {next}>
-        次へ
-      </button>
-    </div>
-  ); 
-  }
-}
+};
 
 export default App;

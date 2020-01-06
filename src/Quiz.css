@@ -1,3 +1,4 @@
+/* Quiz */
 .container {
   background-color: #E7FF05;
   min-height: 100vh;
@@ -5,7 +6,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 26px;
+  font-size: 18px;
   color:rgb(43, 41, 34);
   text-align: center;
 }
