@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-// import 'skeleton-css/css/normalize.css';
-// import 'skeleton-css/css/skeleton.css';
 import {
     handleInput,
     connectToChatkit,
