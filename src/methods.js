@@ -120,4 +120,45 @@ this.setState({
     });
 }
 
-export { handleInput, connectToRoom, connectToChatkit, sendMessage }
+function createPrivateRoom(id) {
+    const { currentUser, rooms } = this.state;
+    const roomName = `${currentUser.id}_${id}`;
+
+    const isPrivateChatCreated = rooms.filter(room => {
+    if (room.customData && room.customData.isDirectMessage) {
+        const arr = [currentUser.id, id];
+        const { userIds } = room.customData;
+
+        if (arr.sort().join('') === userIds.sort().join('')) {
+            return {
+                room,
+            };
+        }
+    }
+
+        return false;
+    });
+
+    if (isPrivateChatCreated.length > 0) {
+        return Promise.resolve(isPrivateChatCreated[0]);
+    }
+
+    return currentUser.createRoom({
+        name: `${roomName}`,
+        private: true,
+        addUserIds: [`${id}`],
+        customData: {
+        isDirectMessage: true,
+        userIds: [currentUser.id, id],
+        },
+    });
+}
+
+function sendDM(id) {
+createPrivateRoom.call(this, id).then(room => {
+    connectToRoom.call(this, room.id);
+});
+}
+
+// update the exports
+export { handleInput, connectToRoom, connectToChatkit, sendMessage, sendDM }

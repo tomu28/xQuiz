@@ -6,6 +6,7 @@ import {
     connectToChatkit,
     connectToRoom,
     sendMessage,
+    sendDM,
 } from '../methods';
 import Dialog from './Dialog';
 import RoomList from './RoomList';
@@ -32,6 +33,7 @@ class ChatApp extends Component {
     this.connectToChatkit = connectToChatkit.bind(this);
     this.connectToRoom = connectToRoom.bind(this);
     this.sendMessage = sendMessage.bind(this);
+    this.sendDM = sendDM.bind(this);
     }
 
     render() {
@@ -93,7 +95,7 @@ class ChatApp extends Component {
                     roomUsers={roomUsers}
                 />
             ) : null}
-            </aside>
+        </aside>
                 {showLogin ? (
                 <Dialog
                     userId={userId}
