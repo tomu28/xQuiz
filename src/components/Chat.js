@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState, Component } from 'react';
+import ChatApp from './ChatApp';
 // Material-UI
 import { makeStyles } from '@material-ui/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
@@ -16,7 +17,7 @@ const useStyles = makeStyles({
 
 function Chat(props) {
     const classes = useStyles();
-    const [value, setValue] = React.useState(0);
+    const [value, setValue] = useState(0);
 
     const changeRoutePath = (e, link) => {
         e.preventDefault();
@@ -27,25 +28,26 @@ function Chat(props) {
     return (
         <div>
             <h2>Chat</h2>
+            <ChatApp></ChatApp>
             <BottomNavigation
-            value={value}
-            onChange={(event, newValue) => {
-            setValue(newValue);
-            }}
-            showLabels
-            className={classes.root}
+                value={value}
+                onChange={(event, newValue) => {
+                    setValue(newValue);
+                }}
+                showLabels
+                className={classes.root}
             >
-            <BottomNavigationAction
-                label="Quiz"
-                icon={<ContactSupportOutlinedIcon />}
-                onClick={(e) => changeRoutePath(e, '/')}/>
-            <BottomNavigationAction
-                label="Chat"
-                icon={<ChatIcon />}
-                onClick={(e) => changeRoutePath(e, '/chat')}/>
+                <BottomNavigationAction
+                    label="Quiz"
+                    icon={<ContactSupportOutlinedIcon />}
+                    onClick={(e) => changeRoutePath(e, '/')}/>
+                <BottomNavigationAction
+                    label="Chat"
+                    icon={<ChatIcon />}
+                    onClick={(e) => changeRoutePath(e, '/chat')}/>
             </BottomNavigation>
         </div>
     );
-}
+};
 
 export default Chat;

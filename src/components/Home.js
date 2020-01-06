@@ -10,7 +10,7 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import ContactSupportOutlinedIcon from '@material-ui/icons/ContactSupportOutlined';
 import ChatIcon from '@material-ui/icons/Chat';
 
-import '../App.css';
+import '../Quiz.css';
 
 const useStyles = makeStyles({
   root: {
