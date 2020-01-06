@@ -1,5 +1,16 @@
 import React from 'react';
 
+import { makeStyles } from '@material-ui/styles';
+import Button from '@material-ui/core/Button';
+
+import '../Quiz.css';
+
+const useStyles = makeStyles({
+    answerButton: {
+      width: "100%",
+    },
+  });
+
 function Answer(props){
     let classes = ['answer'];
 
@@ -8,12 +19,15 @@ function Answer(props){
     }
 
     return (
-        <button 
+        <Button
             value = {props.letter} 
             className = {classes.join(' ')} 
             onClick = {props.handleClick}>
-            <span className="letter">{props.letter}.</span> {props.answer}
-        </button>
+            <span className="letter">{props.letter}.</span>
+            <span className="btn-primary">
+                {props.answer}
+            </span>
+        </Button>
     );
 }
 

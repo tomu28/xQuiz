@@ -9,6 +9,7 @@ import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import ContactSupportOutlinedIcon from '@material-ui/icons/ContactSupportOutlined';
 import ChatIcon from '@material-ui/icons/Chat';
+import Button from '@material-ui/core/Button';
 
 import '../Quiz.css';
 
@@ -18,6 +19,10 @@ const useStyles = makeStyles({
     bottom: 0,
     width: "100%",
   },
+
+  nextButton:{
+    width: "30%",
+  }
 });
 
 function Home(props) {
@@ -69,6 +74,7 @@ function Home(props) {
 
 const question = questions[currentQuestion];
 
+
 const handleClick = e => {
     setCurrentAnswer(e.target.value);
 }
@@ -89,6 +95,8 @@ const renderResultMark = (question, answer) => {
   return <span className = "failed">不正解×</span> ;
 };
 
+
+///////////回答結果とリスタート/////////////
 const renderResultsData = () => {
     return answers.map( answer => {
       const question = questions.find(
@@ -110,8 +118,9 @@ const restart = () => {
   setCurrentAnswer('');
   setCurrentQuestion(0);
   setShowResults(false);
-
 };
+
+///////////////////////////////////////////
 
 const next = () => {
   const answer = {questionId: question.id, answer: currentAnswer};
@@ -139,9 +148,9 @@ if(showResults){
     <div className = "container results">
         <h2>Results</h2>
         <ul>{renderResultsData()}</ul>
-        <button className = "btn btn-primary" onClick = {restart}>
+        <Button variant="outlined" color="secondary" className = {classes.nextButton} onClick = {restart}>
         もう一度挑戦
-        </button>
+        </Button>
       
         <BottomNavigation
           value={value}
@@ -171,15 +180,17 @@ if(showResults){
       
       {renderError()}
 
-      <Answers 
+    
+      <Answers
+        className = "answerText"
         question = {question} 
         currentAnswer = {currentAnswer} 
         handleClick = {handleClick}
       />
-
-      <button className = "btn btn-primary" onClick = {next}>
-        次へ
-      </button>
+      
+      <Button variant="outlined" color="secondary"  className = {classes.nextButton} onClick = {next}>
+      NEXT
+      </Button>
 
       <BottomNavigation
         value={value}
