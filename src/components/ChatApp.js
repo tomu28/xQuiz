@@ -5,9 +5,12 @@ import {
     handleInput,
     connectToChatkit,
     connectToRoom,
+    sendMessage,
 } from '../methods';
 import Dialog from './Dialog';
 import RoomList from './RoomList';
+import ChatSession from './ChatSession';
+import RoomUsers from './RoomUsers';
 import '../Chat.css';
 
 class ChatApp extends Component {
@@ -27,6 +30,8 @@ class ChatApp extends Component {
     };
     this.handleInput = handleInput.bind(this);
     this.connectToChatkit = connectToChatkit.bind(this);
+    this.connectToRoom = connectToRoom.bind(this);
+    this.sendMessage = sendMessage.bind(this);
     }
 
     render() {
@@ -60,31 +65,42 @@ class ChatApp extends Component {
                 />
                 ) : null}
             </aside>
-        <section className="chat-screen">
-            <header className="chat-header">
-                {currentRoom ? <h3>{roomName}</h3> : null}
-            </header>
-            <ul className="chat-messages"></ul>
-            <footer className="chat-footer">
-            <form className="message-form">
-                <input
-                type="text"
-                name="newMessage"
-                className="message-input"
-                placeholder="Type your message and hit ENTER to send"
-                />
-            </form>
-            </footer>
-        </section>
+            <section className="chat-screen">
+                <header className="chat-header">
+                    {currentRoom ? <h3>{roomName}</h3> : null}
+                </header>
+                <ul className="chat-messages">
+                    <ChatSession messages={messages} />
+                </ul>
+                <footer className="chat-footer">
+                    <form onSubmit={this.sendMessage} className="message-form">
+                        <input
+                        type="text"
+                        value={newMessage}
+                        name="newMessage"
+                        className="message-input"
+                        placeholder="Type your message and hit ENTER to send"
+                        onChange={this.handleInput}
+                        />
+                    </form>
+                </footer>
+            </section>
         <aside className="sidebar right-sidebar">
-              {showLogin ? (
-                <Dialog
-                  userId={userId}
-                  handleInput={this.handleInput}
-                  connectToChatkit={this.connectToChatkit}
+            {currentRoom ? (
+                <RoomUsers
+                    currentUser={currentUser}
+                    sendDM={this.sendDM}
+                    roomUsers={roomUsers}
                 />
-              ) : null}
+            ) : null}
             </aside>
+                {showLogin ? (
+                <Dialog
+                    userId={userId}
+                    handleInput={this.handleInput}
+                    connectToChatkit={this.connectToChatkit}
+                />
+            ) : null}
         </div>
     );
     }
