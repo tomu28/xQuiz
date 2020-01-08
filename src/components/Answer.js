@@ -5,12 +5,6 @@ import Button from '@material-ui/core/Button';
 
 import '../Quiz.css';
 
-const useStyles = makeStyles({
-    answerButton: {
-      width: "100%",
-    },
-  });
-
 function Answer(props){
     let classes = ['answer'];
 
