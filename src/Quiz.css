@@ -24,13 +24,16 @@ h2 {
 
 .answer {
   border: 1.5px solid rgb(121, 114, 96);
-  background-color:rgb(236, 236, 236);
-  padding: 5px 10px 5px 45px;
-  width: 50%;
+  background-color: #2b2f2d;
+  padding: 18px 10px 5px 45px;
+  width: 65%;
   text-align: left;
   margin-top: 10px;
   position: relative;
-  font-size: 22px;
+  font-size: 18px;
+  border: solid 2px #67c5ff;
+  border-radius: 3px;
+  text-decoration: none;
   cursor: pointer;
   color: rgb(255, 255, 255);
   transition: ease-in-out, width 0.35s ease-in-out;
