@@ -9,6 +9,7 @@ import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import ContactSupportOutlinedIcon from '@material-ui/icons/ContactSupportOutlined';
 import ChatIcon from '@material-ui/icons/Chat';
+import Button from '@material-ui/core/Button';
 
 import '../Quiz.css';
 
@@ -18,6 +19,10 @@ const useStyles = makeStyles({
     bottom: 0,
     width: "100%",
   },
+
+  nextButton:{
+    width: "30%",
+  }
 });
 
 function Home(props) {
@@ -64,10 +69,56 @@ function Home(props) {
     answer_c: '就寝前',
     answer_d: '起床後',
     correct_answer: 'a',
+  },
+  {
+    id: 4,
+    question: '上腕二頭筋を鍛えるトレーニングは?',
+    answer_a: 'クランチ',
+    answer_b: 'スクワット',
+    answer_c: '懸垂',
+    answer_d: '腕立て',
+    correct_answer: 'd',
+  },
+  {
+    id: 5,
+    question: 'タンパク質を効率的に摂ることができる食材は?',
+    answer_a: 'お米',
+    answer_b: '牛乳',
+    answer_c: 'チーズ',
+    answer_d: 'ささみ',
+    correct_answer: 'd',
+  },
+  {
+    id: 6,
+    question: '太りにくい身体になるために適切な方法は?',
+    answer_a: '有酸素運動',
+    answer_b: '食事で体重増加',
+    answer_c: '基礎代謝量を増やす',
+    answer_d: '食事制限',
+    correct_answer: 'c',
+  },
+  {
+    id: 7,
+    question: '筋肥大に効果的な筋トレのやり方は?',
+    answer_a: '低重量で高回数',
+    answer_b: '低重量で低回数',
+    answer_c: '高重量で高回数',
+    answer_d: '高重量で低回数',
+    correct_answer: 'd',
+  },
+  {
+    id:8,
+    question: '次のうち、胸を強調させるポージングは?',
+    answer_a: 'ダブルバイセップス',
+    answer_b: 'サイドトライセップス',
+    answer_c: 'サイドチェスト',
+    answer_d: 'ラットスプレッド',
+    correct_answer: 'c',
   }
 ];
 
 const question = questions[currentQuestion];
+
 
 const handleClick = e => {
     setCurrentAnswer(e.target.value);
@@ -89,6 +140,8 @@ const renderResultMark = (question, answer) => {
   return <span className = "failed">不正解×</span> ;
 };
 
+
+///////////回答結果とリスタート/////////////
 const renderResultsData = () => {
     return answers.map( answer => {
       const question = questions.find(
@@ -110,8 +163,9 @@ const restart = () => {
   setCurrentAnswer('');
   setCurrentQuestion(0);
   setShowResults(false);
-
 };
+
+///////////////////////////////////////////
 
 const next = () => {
   const answer = {questionId: question.id, answer: currentAnswer};
@@ -139,9 +193,9 @@ if(showResults){
     <div className = "container results">
         <h2>Results</h2>
         <ul>{renderResultsData()}</ul>
-        <button className = "btn btn-primary" onClick = {restart}>
+        <Button variant="outlined" color="secondary" className = {classes.nextButton} onClick = {restart}>
         もう一度挑戦
-        </button>
+        </Button>
       
         <BottomNavigation
           value={value}
@@ -171,15 +225,17 @@ if(showResults){
       
       {renderError()}
 
-      <Answers 
+    
+      <Answers
+        className = "answerText"
         question = {question} 
         currentAnswer = {currentAnswer} 
         handleClick = {handleClick}
       />
-
-      <button className = "btn btn-primary" onClick = {next}>
-        次へ
-      </button>
+      
+      <Button variant="outlined" color="secondary"  className = {classes.nextButton} onClick = {next}>
+      NEXT
+      </Button>
 
       <BottomNavigation
         value={value}
